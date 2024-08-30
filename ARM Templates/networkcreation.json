@@ -1,0 +1,130 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {},
+  "functions": [],
+  "variables": {},
+  "resources": [
+      {
+        "name": "nsg-aztestlab-eastus",
+        "type": "Microsoft.Network/networkSecurityGroups",
+        "apiVersion": "2023-11-01",
+        "location": "[resourceGroup().location]",
+        "properties": {
+          "securityRules": [
+            {
+              "name": "AllowHTTPInbound",
+              "properties": {
+                "description": "description",
+                "protocol": "Tcp",
+                "sourcePortRange": "*",
+                "destinationPortRange": "80",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 100,
+                "direction": "Inbound"
+              }
+            },
+                        {
+              "name": "AllowHTTPSInbound",
+              "properties": {
+                "description": "description",
+                "protocol": "Tcp",
+                "sourcePortRange": "*",
+                "destinationPortRange": "443",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 101,
+                "direction": "Inbound"
+              }
+            },
+                        {
+              "name": "AllowSSHInbound",
+              "properties": {
+                "description": "description",
+                "protocol": "Tcp",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "22",
+                "access": "Allow",
+                "priority": 102,
+                "direction": "Inbound"
+              }
+            },
+                                    {
+              "name": "Allow8080Inbound",
+              "properties": {
+                "description": "description",
+                "protocol": "Tcp",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "8080",
+                "access": "Allow",
+                "priority": 103,
+                "direction": "Inbound"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "vnet-aztestlab-eastus",
+        "type": "Microsoft.Network/virtualNetworks",
+        "apiVersion": "2023-11-01",
+        "location": "[resourceGroup().location]",
+        "tags": {
+          "displayName": "vnet-aztestlab-eastus"
+        },
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/networkSecurityGroups', 'nsg-aztestlab-eastus')]"
+        ],
+        "properties": {
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "Default",
+              "properties": {
+                "addressPrefix": "10.0.0.0/24",
+                "networkSecurityGroup": {
+                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'nsg-aztestlab-eastus')]"
+                }
+              }
+            },
+            {
+              "name": "VMFarm",
+              "properties": {
+                "addressPrefix": "10.0.1.0/24",
+                "networkSecurityGroup": {
+                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'nsg-aztestlab-eastus')]"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "pip-aztestlab-eastus",
+        "type": "Microsoft.Network/publicIPAddresses",
+        "apiVersion": "2023-11-01",
+        "location": "[resourceGroup().location]",
+        "tags": {
+          "displayName": "pip-aztestlab-eastus"
+        },
+        "properties": {
+          "publicIPAllocationMethod": "Static",
+          "dnsSettings": {
+            "domainNameLabel": "portalaztestlab"
+          }
+        }
+      }
+  ],
+  "outputs": {}
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+      "location": {
+          "value": "eastus"
+      },
+      "networkInterfaceName": {
+          "value": "vm-aztestlab-eastus448"
+      },
+      "enableAcceleratedNetworking": {
+          "value": true
+      },
+      "networkSecurityGroupId": {
+          "value": "/subscriptions/09688c0b-8d07-41e6-ad43-b4a1b7329fbc/resourceGroups/rg-aztestlab-eastus/providers/Microsoft.Network/networkSecurityGroups/nsg-aztestlab-eastus"
+      },
+      "subnetName": {
+          "value": "Default"
+      },
+      "virtualNetworkId": {
+          "value": "/subscriptions/09688c0b-8d07-41e6-ad43-b4a1b7329fbc/resourceGroups/rg-aztestlab-eastus/providers/Microsoft.Network/virtualNetworks/vnet-aztestlab-eastus"
+      },
+      "publicIpAddressId": {
+          "value": "/subscriptions/09688c0b-8d07-41e6-ad43-b4a1b7329fbc/resourceGroups/rg-aztestlab-eastus/providers/Microsoft.Network/publicIPAddresses/pip-aztestlab-eastus"
+      },
+      "pipDeleteOption": {
+          "value": "Detach"
+      },
+      "virtualMachineName": {
+          "value": "vm-aztestlab-eastus"
+      },
+      "virtualMachineComputerName": {
+          "value": "vm-aztestlab-eastus"
+      },
+      "virtualMachineRG": {
+          "value": "rg-aztestlab-eastus"
+      },
+      "osDiskType": {
+          "value": "Premium_LRS"
+      },
+      "osDiskDeleteOption": {
+          "value": "Delete"
+      },
+      "virtualMachineSize": {
+          "value": "Standard_D2s_v4"
+      },
+      "nicDeleteOption": {
+          "value": "Delete"
+      },
+      "hibernationEnabled": {
+          "value": false
+      },
+      "adminUsername": {
+          "value": "devopsadmin"
+      },
+      "adminPassword": {
+          "value": "Pa$$w0rd"
+      },
+      "patchMode": {
+          "value": "AutomaticByPlatform"
+      },
+      "rebootSetting": {
+          "value": "IfRequired"
+      }
+  }
+}

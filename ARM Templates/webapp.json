@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  // App Service Plan Refernce : https://learn.microsoft.com/en-us/azure/templates/microsoft.web/serverfarms?pivots=deployment-language-arm-template
+  // WebApp : https://learn.microsoft.com/en-us/azure/templates/microsoft.web/sites?pivots=deployment-language-arm-template
+  "parameters": {},
+  "functions": [],
+  "variables": {},
+  "resources": [
+    {
+      "name": "appsvcplnazlabs",
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2023-01-01",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "F1",
+        "capacity": 1
+      },
+      "tags": {
+        "project": "iaac"
+      },
+      "properties": {
+        "name": "appsvcplnazlabs"
+      }
+    },
+    {
+      "name": "webappazlabs",
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2023-01-01",
+      "location": "[resourceGroup().location]",
+      "tags": {
+      // "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/appServicePlan1')]": "Resource",
+      // "displayName": "webApp1"
+        "project": "iaac"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', 'appsvcplnazlabs')]" //ensuring to create app service plan first
+      ],
+      "properties": {
+        "name": "webappazlabs",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', 'appsvcplnazlabs')]" //linking app service plan with the webapp
+      }
+    }
+  ],
+  "outputs": {}
+}
