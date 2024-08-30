@@ -1,0 +1,106 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  // App Service Plan Refernce : https://learn.microsoft.com/en-us/azure/templates/microsoft.web/serverfarms?pivots=deployment-language-arm-template
+  // WebApp : https://learn.microsoft.com/en-us/azure/templates/microsoft.web/sites?pivots=deployment-language-arm-template
+  "parameters": {
+     "sqlLogin": {
+      "type": "string",
+      "metadata": {
+        "description": "Admin username of the SQL Database Server"
+      }
+    },
+    "sqlPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for the SQL Database Server"
+      }
+    }
+  },
+  "functions": [],
+  "variables": {},
+  "resources": [
+    {
+      "name": "appsvcplnazlabs",
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2023-01-01",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "F1",
+        "capacity": 1
+      },
+      "tags": {
+        "project": "iaac"
+      },
+      "properties": {
+        "name": "appsvcplnazlabs"
+      }
+    },
+    {
+      "name": "webappazlabs",
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2023-01-01",
+      "location": "[resourceGroup().location]",
+      "tags": {
+      // "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/appServicePlan1')]": "Resource",
+      // "displayName": "webApp1"
+        "project": "iaac"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', 'appsvcplnazlabs')]" //ensuring to create app service plan first
+      ],
+      "properties": {
+        "name": "webappazlabs",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', 'appsvcplnazlabs')]" //linking app service plan with the webapp
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "name": "childTemplate",
+      "properties": {
+
+        "mode": "Incremental",// Incremental means resouces will be deployed to resource group without harming the existing resident resources. If you set 'Complete', then it will destroy existing residents
+        "template": { //Here we start the template
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          //SQL Server Creation : https://learn.microsoft.com/en-us/azure/templates/microsoft.sql/servers?pivots=deployment-language-arm-template
+          //SQL Database : https://learn.microsoft.com/en-us/azure/templates/microsoft.sql/servers/databases?pivots=deployment-language-arm-template
+          "resources": [
+             {
+                "name": "sqlsrvazlab",
+                "type": "Microsoft.Sql/servers",
+                "apiVersion": "2021-11-01",
+                "location": "[resourceGroup().location]", //here sqlservers can only be created in eastus2 , not eastus1 . Therefore give the direct location name
+                "tags": {
+                  "project": "iaac"
+                },
+                "properties": {
+                  "administratorLogin": "[parameters('sqlLogin')]", //we are going to accept these values at runtime, so no clear text secrets
+                  "administratorLoginPassword": "[parameters('sqlPassword')]"
+                }
+              },
+            {
+              "name": "[format('{0}/{1}','sqlsrvazlab','appdb')]", //append the strings 
+              "type": "Microsoft.Sql/servers/databases",
+              "apiVersion": "2021-11-01",
+              "location": "[resourceGroup().location]",
+              "tags": {
+                "project": "iaac"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', 'sqlsrvazlab')]"
+              ],
+              "sku": {
+                  "name": "Basic",
+                  "tier": "Basic"
+              },
+              "properties": {}
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}
