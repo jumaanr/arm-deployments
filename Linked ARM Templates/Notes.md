@@ -1,0 +1,1 @@
+# About Linked ARM Templates
