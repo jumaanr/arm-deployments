@@ -8,8 +8,8 @@
   "variables": {
     "app_serviceplan": "appsvspln01eastus2",
     "webapp": "webapp01eastus02",
-    "dbdeployment_template_url": "https://sgadevopslabeastus.blob.core.windows.net/templates/sqldb.json",
-    "dbparam_template_url": "https://sgadevopslabeastus.blob.core.windows.net/templates/parameter.json"
+    "dbdeployment_template_url": "https://sgaaztestlabeastus2.blob.core.windows.net/azdevopsdeploymenttemplates/sqldb.json",
+    "dbparam_template_url": "https://sgaaztestlabeastus2.blob.core.windows.net/azdevopsdeploymenttemplates/parameter.json"
 
   },
   "resources": [
