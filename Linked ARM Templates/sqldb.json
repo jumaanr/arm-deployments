@@ -19,8 +19,8 @@
   },
   "functions": [],
   "variables": {
-    "sql-server": "sqlsvr9845",
-    "sqldb": "appdb9845"
+    "sql-server": "sqlsvrazdevops8900",
+    "sqldb": "appdbazdevops8900"
   },
   "resources": [
     {
@@ -51,7 +51,9 @@
         "name": "Basic",
         "tier": "Basic"
     },
-    "properties": {}
+    "properties": {
+      "publicNetworkAccess": "Enabled"
+    }
   }
   ],
   "outputs": {}
