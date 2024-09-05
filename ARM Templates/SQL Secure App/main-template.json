@@ -8,8 +8,8 @@
   "variables": {
     "appsvcpln": "appsvcpln7501",
     "webapp": "webapp7501",
-    "dbdeployment_template_url": "https://raw.githubusercontent.com/jumaanr/arm-deployments/main/Dynamic%20Resource%20Names/sqldb.json",
-    "dbparam_template_url": "https://raw.githubusercontent.com/jumaanr/arm-deployments/main/Dynamic%20Resource%20Names/parameter.json"
+    "dbdeployment_template_url": "https://raw.githubusercontent.com/jumaanr/arm-deployments/main/ARM%20Templates/SQL%20Secure%20App/sqldb.json",
+    "dbparam_template_url": "https://raw.githubusercontent.com/jumaanr/arm-deployments/main/ARM%20Templates/SQL%20Secure%20App/parameter.json"
 
   },
   "resources": [
