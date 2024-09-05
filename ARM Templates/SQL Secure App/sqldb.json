@@ -18,13 +18,16 @@
     }
   },
   "functions": [],
-  "variables": {},
+  "variables": {
+    "sql-server": "sqlsvr7501",
+    "sqldb": "appdb"
+  },
   "resources": [
     {
-      "name": "sqlsrvazlab",
+      "name": "[variables('sql-server')]",
       "type": "Microsoft.Sql/servers",
       "apiVersion": "2021-11-01",
-      "location": "eastus2", //here sqlservers can only be created in eastus2 , not eastus1 . Therefore give the direct location name
+      "location": "[resourceGroup().location]", //here sqlservers can only be created in eastus2 , not eastus1 . Therefore give the direct location name
       "tags": {
         "project": "iaac"
       },
@@ -34,22 +37,29 @@
       }
     },
   {
-    "name": "[format('{0}/{1}','sqlsrvazlab','appdb')]", //append the strings 
+    "name": "[format('{0}/{1}',variables('sql-server'),variables('sqldb'))]", //append the strings 
     "type": "Microsoft.Sql/servers/databases",
     "apiVersion": "2021-11-01",
-    "location": "eastus2",
+    "location": "[resourceGroup().location]",
     "tags": {
       "project": "iaac"
     },
     "dependsOn": [
-      "[resourceId('Microsoft.Sql/servers', 'sqlsrvazlab')]"
+      "[resourceId('Microsoft.Sql/servers', variables('sql-server'))]"
     ],
     "sku": {
         "name": "Basic",
         "tier": "Basic"
     },
-    "properties": {}
+    "properties": {
+      "publicNetworkAccess": "Enabled"
+    }
   }
   ],
-  "outputs": {}
+  "outputs": {
+    "sqlserverfqdn": {
+      "type": "string",
+      "value": "[reference(variables('sql-server')).fullyQualifiedDomainName]" //https://techcommunity.microsoft.com/t5/azure-database-support-blog/arm-template-outputs-for-azure-sql-database/ba-p/368821
+    }
+  }
 }

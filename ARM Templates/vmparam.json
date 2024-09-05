@@ -3,37 +3,37 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
       "location": {
-          "value": "eastus"
+          "value": "eastus2"
       },
       "networkInterfaceName": {
-          "value": "vm-aztestlab-eastus448"
+          "value": "nic-aztestlab-eastus2"
       },
       "enableAcceleratedNetworking": {
           "value": true
       },
       "networkSecurityGroupId": {
-          "value": "/subscriptions/09688c0b-8d07-41e6-ad43-b4a1b7329fbc/resourceGroups/rg-aztestlab-eastus/providers/Microsoft.Network/networkSecurityGroups/nsg-aztestlab-eastus"
+          "value": "/subscriptions/09688c0b-8d07-41e6-ad43-b4a1b7329fbc/resourceGroups/rg-aztestlab-eastus2/providers/Microsoft.Network/networkSecurityGroups/nsg-aztestlab-eastus2"
       },
       "subnetName": {
           "value": "Default"
       },
       "virtualNetworkId": {
-          "value": "/subscriptions/09688c0b-8d07-41e6-ad43-b4a1b7329fbc/resourceGroups/rg-aztestlab-eastus/providers/Microsoft.Network/virtualNetworks/vnet-aztestlab-eastus"
+          "value": "/subscriptions/09688c0b-8d07-41e6-ad43-b4a1b7329fbc/resourceGroups/rg-aztestlab-eastus2/providers/Microsoft.Network/virtualNetworks/vnet-aztestlab-eastus2"
       },
       "publicIpAddressId": {
-          "value": "/subscriptions/09688c0b-8d07-41e6-ad43-b4a1b7329fbc/resourceGroups/rg-aztestlab-eastus/providers/Microsoft.Network/publicIPAddresses/pip-aztestlab-eastus"
+          "value": "/subscriptions/09688c0b-8d07-41e6-ad43-b4a1b7329fbc/resourceGroups/rg-aztestlab-eastus2/providers/Microsoft.Network/publicIPAddresses/pip-aztestlab-eastus2"
       },
       "pipDeleteOption": {
           "value": "Detach"
       },
       "virtualMachineName": {
-          "value": "vm-aztestlab-eastus"
+          "value": "vm-aztestlab-eastus2"
       },
       "virtualMachineComputerName": {
-          "value": "vm-aztestlab-eastus"
+          "value": "vm-aztestlab-eastus2"
       },
       "virtualMachineRG": {
-          "value": "rg-aztestlab-eastus"
+          "value": "rg-aztestlab-eastus2"
       },
       "osDiskType": {
           "value": "Premium_LRS"

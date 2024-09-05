@@ -7,8 +7,8 @@
       {
           "type": "Microsoft.Resources/resourceGroups",
           "apiVersion": "2018-05-01",
-          "location": "eastus",
-          "name": "rg-aztestlab-eastus",
+          "location": "eastus2",
+          "name": "rg-aztestlab-eastus2",
           "properties": {},
           "tags": {}
       }
